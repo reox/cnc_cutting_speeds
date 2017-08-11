@@ -40,3 +40,24 @@ print(p +
       geom_text(x=575, y=23800, label='d=8')
   )
 dev.off()
+
+
+# Plot f_z vs v_f for z = 1
+p <- ggplot(data.frame(x = c(0.01, 0.4)), aes(x)) + 
+    xlab(expression(f[z]~"[mm/min]")) + ylab(expression(v[f]~"[mm/min]")) + 
+    coord_cartesian(ylim = c(0, 2000), xlim=c(0.01, 0.4)) +
+    labs(title=bquote("feed rate per tooth vs feed rate for different rotation speeds for z = 1"))
+
+
+jpeg('vorschub.jpg', height = 500, width = 1000, units = 'px')
+print(p + 
+      stat_function(fun=vorschub, args=list(z=1,n=6000)) + 
+      stat_function(fun=vorschub, args=list(z=1,n=12000)) + 
+      stat_function(fun=vorschub, args=list(z=1,n=18000)) + 
+      stat_function(fun=vorschub, args=list(z=1,n=24000)) +
+      geom_text(x=0.07, y=2000, label='n=6000') +
+      geom_text(x=0.0975, y=2000, label='n=12000') +
+      geom_text(x=0.15, y=2000, label='n=18000') +
+      geom_text(x=0.31, y=2000, label='n=24000')
+  )
+dev.off()
